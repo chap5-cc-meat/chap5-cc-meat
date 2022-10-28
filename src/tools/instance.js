@@ -12,7 +12,7 @@ const instance = axios.create({
 });
 
 export const meatApi = {
-  // postSignUps: (payload) => instance.post('/signup', payload),
+  postSignUps: (payload) => instance.post('/signup', payload),
   // login: (payload) => instance.post('/login', payload),
   // mypage: (payload) => instance.get(`/mypages/${id}`),
   // personal: (payload) => instance.put(`/mypages/${id}/edit`, payload),
