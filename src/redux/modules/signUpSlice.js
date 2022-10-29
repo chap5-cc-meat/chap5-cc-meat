@@ -39,18 +39,11 @@ const signUpSlice = createSlice({
       state.isLoading = false;
       console.log(action);
       state.infos = action.payload;
-      const isOk = state.infos.ok;
-      console.log(isOk);
-      if (isOk === true) {
-        alert('성공!');
-        // window.location.href = '/Login';
-      }
+      // const isOk = state.infos.ok;
     },
     [__submitBtn.rejected]: (state, action) => {
       state.isLoading = false;
-
       state.error = action.payload;
-      console.log(state.error, action, action.payload);
     },
   },
 });
