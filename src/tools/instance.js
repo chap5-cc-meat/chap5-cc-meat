@@ -13,7 +13,7 @@ const token = document.cookie.replace('token=', '');
 // const id = accesstoken.userId;
 
 const instance = axios.create({
-  baseURL: 'http://52.79.192.62:3000/',
+  baseURL: 'https://www.spartaseosu.shop/',
   headers: {
     Authorization: `Bearer ${token}`,
   },
