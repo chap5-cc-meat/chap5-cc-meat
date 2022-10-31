@@ -1,8 +1,9 @@
-import logger from "redux-logger";
-import { configureStore } from "@reduxjs/toolkit";
+import logger from 'redux-logger';
+import { configureStore } from '@reduxjs/toolkit';
+import homeSlice from '../modules/homeSlice';
 
 const store = configureStore({
-  reducer: {},
+  reducer: { homeSlice },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
