@@ -26,16 +26,16 @@ const Login = () => {
         password: formRef.current.password.value,
       })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        // console.log(res);
+        // console.log(res.data);
         setTokens('token', res.data.accessToken);
         window.location.replace(`/`);
       })
       .catch((error) => {
-        console.log(error.response.data.statusCode);
+        // console.log(error.response.data.statusCode);
         const errMsg = error.response.data.errorMessage;
         const code = error.response.data.statusCode;
-        console.log(code);
+        // console.log(code);
 
         // const ModalMsg = () => {
         //   return (
