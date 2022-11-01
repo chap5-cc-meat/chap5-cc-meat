@@ -140,8 +140,8 @@ const SubMenuList = styled.li`
   font-size: 14px;
   line-height: 18px;
   margin-top: 1px;
-  cursor: pointer;
 
+  cursor: pointer;
   :nth-child(2) {
     margin-left: 12px;
   }
