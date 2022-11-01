@@ -12,14 +12,14 @@ import Footer from '../components/Footer';
 const MyPage = () => {
   const navigate = useNavigate();
   // 로그아웃;
-  // const [tokens, setTokens, removeCookies] = useCookies(['token']);
+  const [tokens, setTokens, removeCookie] = useCookies(['token']);
   // const accesstoken = jwtDecode(tokens.data);
 
   // console.log(accesstoken);
-  // const onLogout = () => {
-  //   removeCookies('accesstoken');
-  //   navigate('/MainPage');
-  // };
+  const onLogout = () => {
+    removeCookie('token');
+    navigate('/');
+  };
   //탭메뉴;
   const [currentTab, setCurrentTab] = useState(0);
   const menuArr = [
@@ -144,7 +144,7 @@ const MyPage = () => {
               Hello, 아무개님
             </p>
             <button
-              // onClick={onLogout}
+              onClick={onLogout}
               className="block float-left h-[24px] border-b-[1px] border-[#cbcbcb]-500 mt-[16px] ml-[40px] bg-white text-[16px] font-bold text-[#cbcbcb] text-[#cbcbcb] cursor-pointer"
             >
               로그아웃

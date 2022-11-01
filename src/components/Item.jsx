@@ -2,10 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import ItemModal from './ItemModal';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Item = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
-
+  const [tokens, setTokens, removeCookies] = useCookies(['token']);
+  const navigate = useNavigate();
   return (
     // <ItemList>
     //   <ItemDiv>
@@ -27,16 +30,28 @@ const Item = ({ product }) => {
       <ItemDiv>
         <div className=" absolute">
           <ItemImg src={product?.imgUrl} />
-
-          <ItemButton onClick={() => setOpenModal(!openModal)}>
-            <CartIcon />
-            {openModal && (
-              <ItemModal
-                closeModal={() => setOpenModal(!openModal)}
-                product={product}
-              />
-            )}
-          </ItemButton>
+          {tokens.token ? (
+            <ItemButton onClick={() => setOpenModal(!openModal)}>
+              <CartIcon />
+              {openModal && (
+                <ItemModal
+                  closeModal={() => setOpenModal(!openModal)}
+                  product={product}
+                />
+              )}
+            </ItemButton>
+          ) : (
+            <>
+              <ItemButton
+                onClick={() => {
+                  alert('로그인이 필요합니다!');
+                  navigate('/login');
+                }}
+              >
+                <CartIcon />
+              </ItemButton>
+            </>
+          )}
         </div>
       </ItemDiv>
       <ItemName>{product?.item}</ItemName>

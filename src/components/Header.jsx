@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import logoSvg from '../assets/logo.svg';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [tokens, setTokens, removeCookies] = useCookies(['token']);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,10 +46,12 @@ const Header = () => {
             <SubMenuList>고객센터</SubMenuList>
           </NavSubMenu>
           <NavSplitBar />
-          {!isLogin ? (
+          {tokens.token ? (
             <>
               <NavSubMenu>
-                <SubMenuList>마이페이지</SubMenuList>
+                <SubMenuList onClick={() => navigate('/MyPage')}>
+                  마이페이지
+                </SubMenuList>
               </NavSubMenu>
               <Cart>
                 <CartIcon />
@@ -58,8 +61,12 @@ const Header = () => {
           ) : (
             <>
               <NavSubMenu>
-                <SubMenuList>로그인</SubMenuList>
-                <SubMenuList>회원가입</SubMenuList>
+                <SubMenuList onClick={() => navigate('/login')}>
+                  로그인
+                </SubMenuList>
+                <SubMenuList onClick={() => navigate('/Signup')}>
+                  회원가입
+                </SubMenuList>
               </NavSubMenu>
               <Cart>
                 <CartIcon />
