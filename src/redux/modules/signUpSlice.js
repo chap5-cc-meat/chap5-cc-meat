@@ -8,10 +8,10 @@ export const __submitBtn = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await meatApi.postSignUps(payload);
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
-      console.log(err.response.data.err);
+      // console.log(err.response.data.err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -35,14 +35,14 @@ const signUpSlice = createSlice({
   },
   extraReducers: {
     [__submitBtn.pending]: (state) => {
-      console.log(1);
+      // console.log(1);
       state.isLoading = true;
     },
     [__submitBtn.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.infos = action.payload;
       const isOk = state.infos.ok;
-      console.log(isOk);
+      // console.log(isOk);
       // const isMsg = state.infos.data.message;
       // if (isOk === true && isMsg === '회원가입성공') {
       if (isOk === true) {
