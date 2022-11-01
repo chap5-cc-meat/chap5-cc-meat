@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import useInput from '../myhooks/useInput';
@@ -38,6 +38,8 @@ import arrow from '../assets/data_arrow.svg';
 
 //회원가입 상세페이지
 const SignDetail = () => {
+  const infoos = useSelector((state) => state.signup.infos);
+  console.log(infoos);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formRef = useRef();
@@ -48,7 +50,7 @@ const SignDetail = () => {
     password: '',
     confirmPassword: '',
   });
-
+  console.log(info);
   // const [isCheckEmail, setIsCheckEmail] = useState(false);
   //이메일 - 중복검사
   // const onCheckEmail = (e) => {
@@ -90,6 +92,7 @@ const SignDetail = () => {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+    console.log(info);
     dispatch(__submitBtn(info));
     setInfos();
   };

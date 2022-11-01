@@ -1,24 +1,24 @@
 //src/pages/MyPage.jsx
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import data_mypage from '../assets/data_mypage.svg';
 import jwtDecode from 'jwt-decode';
-// import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  //로그아웃
-  //   const [tokens, setTokens, removeCookies] = useCookies(['token']);
-  //   const accesstoken = jwtDecode(tokens.data);
+  // 로그아웃;
+  // const [tokens, setTokens, removeCookies] = useCookies(['token']);
+  // const accesstoken = jwtDecode(tokens.data);
 
-  //   console.log(accesstoken);
-  //   const onLogout = () => {
-  //     removeCookies('accesstoken');
-  //     navigate('/MainPage');
-  //   };
+  // console.log(accesstoken);
+  // const onLogout = () => {
+  //   removeCookies('accesstoken');
+  //   navigate('/MainPage');
+  // };
   //탭메뉴;
   const [currentTab, setCurrentTab] = useState(0);
   const menuArr = [
@@ -74,7 +74,7 @@ const MyPage = () => {
         </div>
       ),
       content: (
-        <section className="w-[980px] mt-[85px] ">
+        <section className="w-[980px] mt-[85px]">
           <div className="text-center">
             <input
               type="text"
@@ -143,7 +143,7 @@ const MyPage = () => {
               Hello, 아무개님
             </p>
             <button
-              //   onClick={onLogout}
+              // onClick={onLogout}
               className="block float-left h-[24px] border-b-[1px] border-[#cbcbcb]-500 mt-[16px] ml-[40px] bg-white text-[16px] font-bold text-[#cbcbcb] text-[#cbcbcb] cursor-pointer"
             >
               로그아웃

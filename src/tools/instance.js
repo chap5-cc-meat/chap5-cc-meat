@@ -13,6 +13,7 @@ const token = document.cookie.replace('token=', '');
 // const id = accesstoken.userId;
 
 const instance = axios.create({
+  // baseURL: 'http://localhost:3001',
   baseURL: 'https://www.spartaseosu.shop/',
   headers: {
     Authorization: `Bearer ${token}`,
@@ -20,8 +21,10 @@ const instance = axios.create({
 });
 
 export const meatApi = {
+  // postSignUps: (payload) => instance.post('/info', payload),
   postSignUps: (payload) => instance.post('/users/signup', payload),
   postLogin: (payload) => instance.post('/users/login', payload),
+  // postLogin: (payload) => instance.post('/users/login', payload),
   // mypage: (payload) => instance.get(`/mypages/${id}`),
   // personal: (payload) => instance.put(`/mypages/${id}/edit`, payload),
   // item: (payload) => instance.get(`/mypages/goods/${id}`),
