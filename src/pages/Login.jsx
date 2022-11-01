@@ -7,6 +7,7 @@ import { useCookies } from 'react-cookie';
 import btnG_icon_square from '../assets/btnG_icon_square.png';
 import data_kakao from '../assets/data_kakao.svg';
 import data_naver from '../assets/data_naver.svg';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [login, onChange, setLogin] = useInput({
@@ -154,6 +155,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
+      <Footer />
     </>
   );
 };

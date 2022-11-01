@@ -9,6 +9,7 @@ import { meatApi } from '../tools/instance';
 import docs from '../assets/data_docs.svg';
 import signinfo from '../assets/data_signinfo.svg';
 import arrow from '../assets/data_arrow.svg';
+import Footer from '../components/Footer';
 // import { meatApi } from '../tools/instance';
 
 // const Pop = () => {
@@ -227,6 +228,7 @@ const SignDetail = () => {
           </form>
         </section>
       </div>
+      <Footer />
     </>
   );
 };

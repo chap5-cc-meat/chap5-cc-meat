@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
+import Footer from '../components/Footer';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -117,7 +118,7 @@ const MyPage = () => {
           개인정보관리
         </div>
       ),
-      content: 'Tab menu THREE',
+      content: '개인정보 보호를 위해 한번 더 로그인해주시기 바랍니다.',
     },
   ];
   //탭메뉴 선택시 내용 컨트롤
@@ -223,6 +224,7 @@ const MyPage = () => {
         </div>
         <div>{menuArr[currentTab].content}</div>
       </div>
+      <Footer />
     </>
   );
 };

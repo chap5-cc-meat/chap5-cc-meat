@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import data_kakao from '../assets/data_kakao.svg';
 import data_naver from '../assets/data_naver.svg';
+import Footer from '../components/Footer';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -59,11 +60,12 @@ const SignUp = () => {
 
         <p className="mt-[34px] mb-[100px] text-[16px] text-center cursor-pointer font-sans">
           {'정육각 회원이신가요?'}
-          <Link to="/SignUp" className="text-red-500">
+          <Link to="/Login" className="text-red-500">
             <span> 로그인하기</span>
           </Link>
         </p>
       </div>
+      <Footer />
     </>
   );
 };
