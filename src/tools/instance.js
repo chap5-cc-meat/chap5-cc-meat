@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 //로컬 스토리지 토큰 가져오기
 //const token = localStorage.getItem('token');
@@ -7,13 +8,23 @@ import axios from 'axios';
 //   Authorization: `Bearer ${token}`,
 // },
 
+const token = document.cookie.replace('token=', '');
+// const accesstoken = token && jwt_decode(token);
+// const id = accesstoken.userId;
+
 const instance = axios.create({
-  baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3001',
+  baseURL: 'https://www.spartaseosu.shop/',
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 export const meatApi = {
-  // postSignUps: (payload) => instance.post('/signup', payload),
-  // login: (payload) => instance.post('/login', payload),
+  // postSignUps: (payload) => instance.post('/info', payload),
+  postSignUps: (payload) => instance.post('/users/signup', payload),
+  postLogin: (payload) => instance.post('/users/login', payload),
+  // postLogin: (payload) => instance.post('/users/login', payload),
   // mypage: (payload) => instance.get(`/mypages/${id}`),
   // personal: (payload) => instance.put(`/mypages/${id}/edit`, payload),
   // item: (payload) => instance.get(`/mypages/goods/${id}`),
