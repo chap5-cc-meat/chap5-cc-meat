@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Cookies } from 'react-cookie';
 import { meatApi } from '../../tools/instance';
+import axios from 'axios';
 
 //initialState
 const initialState = {
@@ -11,9 +13,21 @@ const initialState = {
 
 export const __getItems = createAsyncThunk(
   'getItems/주문할 상품들',
-  async (payload, thunkAPI) => {
+  async (_, thunkAPI) => {
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+    console.log(token);
+    const headers = {
+      Authorization: `${token}`,
+    };
+    console.log(headers);
     try {
-      const { data } = await meatApi.getItems(payload);
+      // const { data } = await meatApi.getItems();
+      const { data } = await axios.get('https://www.iceflower.shop/carts/', {
+        headers,
+      });
+      console.log(data);
+
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -34,18 +48,18 @@ export const __deleteItems = createAsyncThunk(
   }
 );
 
-const CartItemsSlice = createSlice({
+const cartItemSlice = createSlice({
   name: 'cartItems',
   initialState,
   reducers: {},
   extraReducers: {
     //getItems
-    [__getItems.pengding]: (state) => {
+    [__getItems.pending]: (state) => {
       state.isLoading = true;
     },
     [__getItems.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.items = action.payload;
+      state.carts = action.payload;
     },
     [__getItems.rejected]: (state, action) => {
       state.isLoading = false;
@@ -58,7 +72,7 @@ const CartItemsSlice = createSlice({
     },
     [__deleteItems]: (state, action) => {
       state.isLoading = false;
-      state.items = state.items.filter(
+      state.carts = state.carts.filter(
         (item) => item.postId !== action.payload
       );
     },
@@ -69,5 +83,5 @@ const CartItemsSlice = createSlice({
   },
 });
 
-export const {} = CartItemsSlice.actions;
-export default CartItemsSlice.reducer;
+export const {} = cartItemSlice.actions;
+export default cartItemSlice.reducer;
