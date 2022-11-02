@@ -12,7 +12,7 @@ export const __getAnItem = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `https://www.spartaseosu.shop/posts/${payload}`
+        `https://www.iceflower.shop/posts/${payload}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {

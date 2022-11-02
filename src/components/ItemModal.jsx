@@ -1,11 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addItemCount, __PostCart } from '../redux/modules/ItemSlice';
 
 const ItemModal = (props) => {
   const [count, setCount] = useState(1);
-  const { cost = 48000, item = '한우 등심', option = '구이용' } = props.product;
+  const {
+    cost = 48000,
+    item = '한우 등심',
+    option = '구이용',
+    postId,
+  } = props.product;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   //모달 오픈, 닫기 시 위치 고정
   useEffect(() => {
     document.body.style.cssText = `
@@ -28,6 +39,18 @@ const ItemModal = (props) => {
   };
 
   const closeBtnHandler = () => {
+    props.closeModal();
+  };
+
+  const buyNowHandler = () => {
+    dispatch(__PostCart({ amount: count, postId: postId }));
+    dispatch(addItemCount(count));
+    navigate('/Carts');
+  };
+
+  const addCartHandler = () => {
+    dispatch(__PostCart({ amount: count, postId: postId }));
+    dispatch(addItemCount(count));
     props.closeModal();
   };
 
@@ -57,8 +80,8 @@ const ItemModal = (props) => {
           </DropDownDiv>
           <ItemPrice>{(cost * count).toLocaleString()}원</ItemPrice>
           <ItemCartBtns>
-            <BuyNowBtn>바로구매</BuyNowBtn>
-            <ItemCartBtn>장바구니</ItemCartBtn>
+            <BuyNowBtn onClick={buyNowHandler}>바로구매</BuyNowBtn>
+            <ItemCartBtn onClick={addCartHandler}>장바구니</ItemCartBtn>
           </ItemCartBtns>
         </ItemModalDiv>
       </ModalBackGround>

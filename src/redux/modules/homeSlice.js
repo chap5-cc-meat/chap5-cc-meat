@@ -11,7 +11,7 @@ export const __getItems = createAsyncThunk(
   'homeSlice/getItems',
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get('https://www.spartaseosu.shop/posts');
+      const { data } = await axios.get('https://www.iceflower.shop/posts');
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

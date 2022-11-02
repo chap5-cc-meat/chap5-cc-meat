@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 const initialState = {
-  item: [],
+  itemCount: 0,
   isLoading: false,
   error: null,
 };
@@ -10,11 +11,16 @@ const initialState = {
 export const __PostCart = createAsyncThunk(
   'Item/Post_Item_to_Cart',
   async (payload, thunkAPI) => {
-    console.log(payload);
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+    const headers = {
+      Authorization: `${token}`,
+    };
     try {
       const { data } = await axios.post(
-        'https://www.spartaseosu.shop/carts/',
-        payload
+        'https://www.iceflower.shop/carts',
+        payload,
+        { headers }
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -26,14 +32,17 @@ export const __PostCart = createAsyncThunk(
 const ItemSlice = createSlice({
   name: 'ItemSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    addItemCount: (state, action) => {
+      state.itemCount = state.itemCount + action.payload;
+    },
+  },
   extraReducers: {
     [__PostCart.pending]: (state) => {
       state.isLoading = true;
     },
     [__PostCart.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.item = action.payload;
     },
     [__PostCart.rejected]: (state, action) => {
       state.isLoading = false;
@@ -42,4 +51,5 @@ const ItemSlice = createSlice({
   },
 });
 
+export const { addItemCount } = ItemSlice.actions;
 export default ItemSlice.reducer;

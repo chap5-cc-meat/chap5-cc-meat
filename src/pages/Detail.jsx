@@ -6,6 +6,8 @@ import DetailContents from '../components/DetailContents';
 import Header from '../components/Header';
 import { __getAnItem } from '../redux/modules/detailSlice';
 import DetailTabs from '../components/DetailTabs';
+import DetailBody from '../components/DetailBody';
+import Footer from '../components/Footer';
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(__getAnItem(Number(id)));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <div>
@@ -32,6 +34,8 @@ const Detail = () => {
         </DetailContainer>
       </DetailSection>
       <DetailTabs />
+      <DetailBody item={item} />
+      <Footer />
     </div>
   );
 };

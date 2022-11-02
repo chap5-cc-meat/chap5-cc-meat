@@ -34,14 +34,18 @@ const Footer = () => {
           />
           <CompanyInfoDiv>
             <div className="mb-1">
-              (주)정육각 대표이사: 김재연 | 주소: 경기도 김포시 고촌읍
-              아라육로57번길 126
+              (주)정육각 대표이사:{' '}
+              <span className="text-[#4bb8ce]">강승훈</span> | 주소: 경기도
+              김포시 고촌읍 아라육로57번길 126
             </div>
             <div className="mb-1">
               사업자등록번호 : 224-87-00271 [조회]|통신판매업신고번호:
               2021-경기김포-0668
             </div>
-            <div>개인정보관리책임자: 박준태(privacy@yookgak.com)</div>
+            <div>
+              개인정보관리책임자: <span className="text-[#4bb8ce]">남해리</span>
+              (privacy@yookgak.com)
+            </div>
           </CompanyInfoDiv>
           <div className="mt-[29px] text-[12px]">
             © 2021 Jeongyookgak Inc. All rights reserved.
@@ -51,17 +55,17 @@ const Footer = () => {
           <h6 className="text-[14px] font-bold">고객센터</h6>
           <h3 className="text-[24px] font-bold mt-[-5px]">1800-0658</h3>
           <p className="text-[12px] leading-[15px] text-[#757575] mt-[-5px]">
-            평일: 08:30 - 17:30 <br />
-            점심: 12:30 - 13:30 <br />
+            <span className="text-[#4bb8ce]">서수형</span> - 평일: 08:30 - 17:30{' '}
+            <br />
+            <span className="text-[#4bb8ce]">정정길</span> - 점심: 12:30 - 13:30{' '}
+            <br />
             (토, 일 및 공휴일 휴무)
             <br />
           </p>
           <p className="mt-[9px] text-[13px]">
-            카카오톡: <span className="text-[#4bb8ce]">@정육각</span>
+            카카오톡: <span className="text-[#4bb8ce]">@조민수</span>
           </p>
-          <p className="text-[13px]">
-            이메일: <span className="text-[#4bb8ce]">help@yookgak.com</span>
-          </p>
+          <p className="text-[13px]">이메일: help@yookgak.com</p>
           <FAQButton style={{ marginRight: 8 }}>자주묻는질문</FAQButton>
           <FAQButton>1:1문의</FAQButton>
         </ExtraInfo>

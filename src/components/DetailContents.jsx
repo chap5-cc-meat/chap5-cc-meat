@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { __PostCart } from '../redux/modules/ItemSlice';
+import { addItemCount } from '../redux/modules/ItemSlice';
 
 const DetailContents = () => {
   const [count, setCount] = useState(1);
   const item = useSelector((state) => state.detailSlice.item.data);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const minusBtnHandler = () => {
     if (count < 2) {
@@ -12,6 +18,18 @@ const DetailContents = () => {
     } else {
       setCount((count) => count - 1);
     }
+  };
+
+  const buyNowHandler = () => {
+    dispatch(__PostCart({ amount: count, postId: item.postId }));
+    dispatch(addItemCount(count));
+    navigate('/Carts');
+  };
+
+  const addCartHandler = () => {
+    dispatch(__PostCart({ amount: count, postId: item.postId }));
+    dispatch(addItemCount(count));
+    alert('장바구니에 추가하였습니다 ');
   };
 
   return (
@@ -42,8 +60,8 @@ const DetailContents = () => {
         </CountBtnDiv>
       </CountDiv>
       <ItemCartBtns>
-        <BuyNowBtn>바로구매</BuyNowBtn>
-        <ItemCartBtn>장바구니</ItemCartBtn>
+        <BuyNowBtn onClick={buyNowHandler}>바로구매</BuyNowBtn>
+        <ItemCartBtn onClick={addCartHandler}>장바구니</ItemCartBtn>
       </ItemCartBtns>
     </ContentContainer>
   );
