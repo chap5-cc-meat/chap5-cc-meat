@@ -10,8 +10,6 @@ import docs from '../assets/data_docs.svg';
 import signinfo from '../assets/data_signinfo.svg';
 import arrow from '../assets/data_arrow.svg';
 import Footer from '../components/Footer';
-// import { meatApi } from '../tools/instance';
-
 // const Pop = () => {
 //   const open = () => {};
 
@@ -41,7 +39,6 @@ import Footer from '../components/Footer';
 const SignDetail = () => {
   const infoos = useSelector((state) => state.signup.infos);
   console.log(infoos);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const formRef = useRef();
   //여유가 되면 react-hook-form
@@ -80,24 +77,33 @@ const SignDetail = () => {
       return alert('모든 항목을 입력해주셔유');
     }
 
-    // meatApi
-    //   .postSignUps({
-    //     email: formRef.current.email.value,
-    //     nickname: formRef.current.nickname.value,
-    //     password: formRef.current.password.value,
-    //     confirmPassword: formRef.current.confirmPassword.value,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    meatApi
+      .postSignUps({
+        email: formRef.current.email.value,
+        nickname: formRef.current.nickname.value,
+        password: formRef.current.password.value,
+        confirmPassword: formRef.current.confirmPassword.value,
+      })
+      .then((res) => {
+        console.log(res);
+        const isOk = res.data.ok;
+        const isMsg = res.data.message;
+        if (isOk === true) {
+          alert('로그인출발~');
+          window.location.href = '/Login';
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        const statusCode = err.response.status;
+        const errMsg = err.response.data.err;
+        statusCode === 412 ? alert(errMsg) : <></>;
+      });
+
     console.log(info);
-    dispatch(__submitBtn(info));
+    // dispatch(__submitBtn(info));
     setInfos();
   };
-
   // console.log(info);
 
   return (
@@ -166,6 +172,7 @@ const SignDetail = () => {
                     type="password"
                     name="password"
                     value={info.password}
+                    maxLength="30"
                     onChange={onChange}
                     className="w-[456px] h-[38px] pl-[22px] text-[14px] ml-[20px] mt-[15px] border border-solid border-[#e1dedf]"
                   />

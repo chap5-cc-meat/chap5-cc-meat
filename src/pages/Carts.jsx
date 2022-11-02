@@ -27,10 +27,10 @@ const Carts = () => {
   // const meatInfo = meatApi.getItems(payload).then((res) => {
 
   // }).catch()
+
   return (
     <>
       <Header />
-      {}
       <div>
         <div className="w-[1180px] mx-[auto] mt-[160px] pb-[100px] overflow-hidden">
           <p className="text-[32px] leading-[26px] text-center">장바구니</p>
