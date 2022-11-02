@@ -7,6 +7,7 @@ import Login from '../pages/Login';
 import SignDetail from '../pages/SignDetail';
 import MyPage from '../pages/MyPage';
 import Detail from '../pages/Detail';
+import Carts from '../pages/Carts';
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path="/Signup/register" element={<SignDetail />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/Carts" element={<Carts />} />
       </Routes>
     </BrowserRouter>
   );
