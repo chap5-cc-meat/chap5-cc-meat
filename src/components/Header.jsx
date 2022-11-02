@@ -1,18 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 import logoSvg from '../assets/logo.svg';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [tokens, setTokens, removeCookies] = useCookies(['token']);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const goHomeHandler = () => {
+    navigate('/');
+  };
+
+  const goShoppingHandler = () => {
+    navigate('/list');
+  };
 
   return (
     <HeaderDiv top="0px" position="fixed">
       <NavContainer>
-        <Logo src={logoSvg} />
+        <Logo src={logoSvg} onClick={goHomeHandler} />
         <NavMainMenu>
-          <NavMainMenuList>쇼핑하기</NavMainMenuList>
+          <NavMainMenuList onClick={goShoppingHandler}>
+            {location.pathname === '/list' ? (
+              <NavMenu
+                border="1px solid #fff"
+                fontweight="700"
+                onClick={goShoppingHandler}
+              >
+                쇼핑하기
+              </NavMenu>
+            ) : (
+              <NavMenu onClick={goShoppingHandler}>쇼핑하기</NavMenu>
+            )}
+          </NavMainMenuList>
           <NavMainMenuList>배송안내</NavMainMenuList>
           <NavMainMenuList>이벤트</NavMainMenuList>
         </NavMainMenu>
@@ -22,10 +45,12 @@ const Header = () => {
             <SubMenuList>고객센터</SubMenuList>
           </NavSubMenu>
           <NavSplitBar />
-          {!isLogin ? (
+          {tokens.token ? (
             <>
               <NavSubMenu>
-                <SubMenuList>마이페이지</SubMenuList>
+                <SubMenuList onClick={() => navigate('/MyPage')}>
+                  마이페이지
+                </SubMenuList>
               </NavSubMenu>
               <Cart>
                 <CartIcon />
@@ -35,8 +60,12 @@ const Header = () => {
           ) : (
             <>
               <NavSubMenu>
-                <SubMenuList>로그인</SubMenuList>
-                <SubMenuList>회원가입</SubMenuList>
+                <SubMenuList onClick={() => navigate('/login')}>
+                  로그인
+                </SubMenuList>
+                <SubMenuList onClick={() => navigate('/Signup')}>
+                  회원가입
+                </SubMenuList>
               </NavSubMenu>
               <Cart>
                 <CartIcon />
@@ -96,6 +125,11 @@ const NavMainMenuList = styled.li`
   :nth-child(3) {
     margin-right: 0px;
   }
+`;
+
+const NavMenu = styled.span`
+  border-bottom: ${(props) => props.border || ''};
+  font-weight: ${(props) => props.fontweight || ''};
 `;
 
 const NavigationRight = styled.div`

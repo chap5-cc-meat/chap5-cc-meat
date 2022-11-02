@@ -1,13 +1,16 @@
 import React from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const ItemModal = (props) => {
+  const [count, setCount] = useState(1);
+  const { cost = 48000, item = '한우 등심', option = '구이용' } = props.product;
+  //모달 오픈, 닫기 시 위치 고정
   useEffect(() => {
     document.body.style.cssText = `
     position: fixed; 
     top: -${window.scrollY}px;
-    overflow-y: scroll;
     width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;
@@ -15,6 +18,14 @@ const ItemModal = (props) => {
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
     };
   }, []);
+
+  const minusBtnHandler = () => {
+    if (count < 2) {
+      return;
+    } else {
+      setCount((count) => count - 1);
+    }
+  };
 
   const closeBtnHandler = () => {
     props.closeModal();
@@ -25,14 +36,14 @@ const ItemModal = (props) => {
       <ModalBackGround onClick={closeBtnHandler}>
         <ItemModalDiv onClick={(e) => e.stopPropagation()}>
           <CloseBtn onClick={closeBtnHandler}></CloseBtn>
-          <ItemName>초신선 돼지 삼겹살 구이용</ItemName>
+          <ItemName>{item}</ItemName>
           <CountDiv>
             <CountBtnDiv>
-              <MinusBtn>
+              <MinusBtn onClick={minusBtnHandler}>
                 <MinusIcon />
               </MinusBtn>
-              <CountNumber>1</CountNumber>
-              <PlusBtn>
+              <CountNumber>{count}</CountNumber>
+              <PlusBtn onClick={() => setCount((count) => count + 1)}>
                 <PlusIcon />
               </PlusBtn>
             </CountBtnDiv>
@@ -40,11 +51,11 @@ const ItemModal = (props) => {
           <OptionChoice>옵션선택</OptionChoice>
           <DropDownDiv>
             <DropDownBtn>
-              보통(16mm)
+              {option}
               <DropDownIcon />
             </DropDownBtn>
           </DropDownDiv>
-          <ItemPrice>3,600원</ItemPrice>
+          <ItemPrice>{(cost * count).toLocaleString()}원</ItemPrice>
           <ItemCartBtns>
             <BuyNowBtn>바로구매</BuyNowBtn>
             <ItemCartBtn>장바구니</ItemCartBtn>
