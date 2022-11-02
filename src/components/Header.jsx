@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import logoSvg from '../assets/logo.svg';
-import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
