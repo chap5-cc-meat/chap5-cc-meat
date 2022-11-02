@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const ItemModal = (props) => {
   const [count, setCount] = useState(1);
-  const { cost, item, option } = props.product;
+  const { cost = 48000, item = '한우 등심', option = '구이용' } = props.product;
   //모달 오픈, 닫기 시 위치 고정
   useEffect(() => {
     document.body.style.cssText = `

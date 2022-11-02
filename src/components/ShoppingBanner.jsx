@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom';
 const ShoppingBanner = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tab = searchParams.get('tab');
-  console.log(tab);
 
   const [pork, beef, chicken, seafood, mealkit, milk, egg, baby] = [
     'https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-app/web/list_top/new/pcpork.png',
