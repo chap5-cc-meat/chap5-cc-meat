@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import Item from '../components/Item';
 import ShoppingBanner from '../components/ShoppingBanner';
 import ShoppingTabs from '../components/ShoppingTabs';
-import { __getItems } from '../redux/modules/homeSlice';
 import { useSelector } from 'react-redux';
 
 const Shopping = () => {
@@ -18,7 +17,7 @@ const Shopping = () => {
 
   const items = useSelector((state) => state.homeSlice.items.data);
   const [data, setData] = useState(items);
-  const test = data.filter((item) => item.category === tab);
+  const test = data?.filter((item) => item.category === tab);
 
   const props = {
     amount: 1,
@@ -62,7 +61,7 @@ const Shopping = () => {
       </ListTabSection>
       <ItemListsSection>
         <ItemLists>
-          {test.length === 0 ? (
+          {test?.length === 0 ? (
             <Item product={props} />
           ) : (
             test?.map((item) => <Item key={item.postId} product={item} />)
