@@ -14,7 +14,7 @@ const token = document.cookie.replace('token=', '');
 
 const instance = axios.create({
   // baseURL: 'http://localhost:3001',
-  baseURL: 'https://www.spartaseosu.shop/',
+  baseURL: 'https://www.iceflower.shop/',
   headers: {
     Authorization: `Bearer ${token}`,
   },
