@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
 import EmptyCarts from './EmptyCarts';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getItems } from '../redux/modules/cartItemSlice';
+import { __deleteItems, __getItems } from '../redux/modules/cartItemSlice';
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
 
@@ -31,11 +31,13 @@ const Carts = () => {
   console.log(getItems);
 
   const getItem = getItems.data;
-  console.log(getItem);
 
   // const [, setBasket] = useState();
-  // const [data, setGetItem] = useState(getItems);
-
+  const [Items, setItems] = useState(getItem);
+  console.log(...Items); //새로고침하면 오류 hi
+  // const cartItems = Items.cartId;
+  // const cartItems = Array.from(Items);
+  // console.log(cartItems);
   //view
   useEffect(() => {
     dispatch(__getItems());
@@ -56,6 +58,10 @@ const Carts = () => {
   const plusBtn = () => {
     setAmount((crr) => crr + 1);
     console.log(amount);
+  };
+
+  const onDeleteBtn = () => {
+    // dispatch(__deleteItems(cartItems));
   };
 
   // if (basket !== 0) {
@@ -107,7 +113,7 @@ const Carts = () => {
                       {items.option}
                     </div>
                     <div className="w-[118px] h-[38px] border border-[1px] border-[#dcdcdc] text-center">
-                      <ButtonMinus onClick={() => minusBtn}>
+                      <ButtonMinus onClick={minusBtn}>
                         <img
                           src={minus}
                           alt="minus"
@@ -118,7 +124,7 @@ const Carts = () => {
                         {items.amount}
                         {/* {amount} */}
                       </p>
-                      <ButtonPlus onClick={() => plusBtn}>
+                      <ButtonPlus onClick={plusBtn}>
                         <img
                           src={plus}
                           alt="plus"
@@ -136,6 +142,7 @@ const Carts = () => {
                       // style={{
                       //   backgroundImage: "url('../assets/data_itemclose.svg')",
                       // }}
+                      onClick={onDeleteBtn}
                     >
                       <img src={itemdel} alt="itemdel" />
                     </button>
@@ -218,7 +225,7 @@ const Carts = () => {
 export default Carts;
 
 //더하기 버튼
-const ButtonPlus = styled.button`
+const ButtonPlus = styled.div`
   float: left;
   width: 44px;
   height: 100%;
