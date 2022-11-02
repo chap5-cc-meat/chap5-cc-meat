@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import logoSvg from '../assets/logo.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [tokens, setTokens, removeCookies] = useCookies(['token']);
+  const cartCount = useSelector((state) => state.ItemSlice.itemCount);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,9 +54,9 @@ const Header = () => {
                   마이페이지
                 </SubMenuList>
               </NavSubMenu>
-              <Cart>
+              <Cart onClick={() => navigate('/Carts')}>
                 <CartIcon />
-                <CartCount>0</CartCount>
+                <CartCount>{cartCount}</CartCount>
               </Cart>
             </>
           ) : (

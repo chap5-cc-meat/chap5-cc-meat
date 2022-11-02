@@ -10,11 +10,15 @@ const Item = ({ product }) => {
   const [tokens, setTokens, removeCookies] = useCookies(['token']);
   const navigate = useNavigate();
 
+  const goToDetailHandler = () => {
+    navigate(`/detail/${product?.postId}`);
+  };
+
   return (
     <ItemList>
       <ItemDiv>
         <div className=" absolute">
-          <ItemImg src={product?.imgUrl} />
+          <ItemImg src={product?.imgUrl} onClick={goToDetailHandler} />
           {tokens.token ? (
             <ItemButton onClick={() => setOpenModal(!openModal)}>
               <CartIcon />
@@ -39,8 +43,10 @@ const Item = ({ product }) => {
           )}
         </div>
       </ItemDiv>
-      <ItemName>{product?.item}</ItemName>
-      <ItemInfo>기준가 {product.cost?.toLocaleString()}원/600g</ItemInfo>
+      <ItemName onClick={goToDetailHandler}>{product?.item}</ItemName>
+      <ItemInfo onClick={goToDetailHandler}>
+        기준가 {product.cost?.toLocaleString()}원/600g
+      </ItemInfo>
     </ItemList>
   );
 };
