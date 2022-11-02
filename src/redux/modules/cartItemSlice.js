@@ -1,25 +1,50 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Cookies } from 'react-cookie';
 import { meatApi } from '../../tools/instance';
+import axios from 'axios';
+// import { create } from 'json-server';<=이거 절대 주석풀면x
+//오류 46개 생기는데 잠시 메모해둘 생각인..
 
 //initialState
 const initialState = {
   carts: [],
   isLoading: false,
   isSuccess: false,
-  error: false,
+  error: null,
 };
 
 export const __getItems = createAsyncThunk(
   'getItems/주문할 상품들',
-  async (payload, thunkAPI) => {
+  async (_, thunkAPI) => {
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+    console.log(token);
+    const headers = {
+      Authorization: `${token}`,
+    };
+    console.log(headers);
     try {
-      const { data } = await meatApi.getItems(payload);
+      // const { data } = await meatApi.getItems();
+      const { data } = await axios.get('https://www.iceflower.shop/carts/', {
+        headers,
+      });
+      console.log(data);
+
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+// export const __addBtn = createAsyncThunk(
+//   'addcount/증가',
+//   async (payload, thunkAPI) => {
+//     try {
+//       await axios.get
+//     }
+//   }
+// )
 
 export const __deleteItems = createAsyncThunk(
   'deleteItems/상품을 삭제',
@@ -28,24 +53,28 @@ export const __deleteItems = createAsyncThunk(
       //payload = postId 를 받아 상품 삭제
       await meatApi.deleteItems(payload);
       return thunkAPI.fulfillWithValue(payload);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
-const CartItemsSlice = createSlice({
+const cartItemSlice = createSlice({
   name: 'cartItems',
   initialState,
-  reducers: {},
+  reducers: {
+    // addBtn: (state, action) => {
+    //   state.carts
+    // }
+  },
   extraReducers: {
     //getItems
-    [__getItems.pengding]: (state) => {
+    [__getItems.pending]: (state) => {
       state.isLoading = true;
     },
     [__getItems.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.items = action.payload;
+      state.carts = action.payload;
     },
     [__getItems.rejected]: (state, action) => {
       state.isLoading = false;
@@ -58,8 +87,9 @@ const CartItemsSlice = createSlice({
     },
     [__deleteItems]: (state, action) => {
       state.isLoading = false;
-      state.items = state.items.filter(
-        (item) => item.postId !== action.payload
+      console.log(1);
+      state.carts = state.carts.data.filter(
+        (item) => item.cartId !== action.payload
       );
     },
     [__deleteItems]: (state, action) => {
@@ -69,5 +99,5 @@ const CartItemsSlice = createSlice({
   },
 });
 
-export const {} = CartItemsSlice.actions;
-export default CartItemsSlice.reducer;
+export const {} = cartItemSlice.actions;
+export default cartItemSlice.reducer;

@@ -14,7 +14,9 @@ const MyPage = () => {
   const navigate = useNavigate();
   // 로그아웃;
   const [tokens, setTokens, removeCookie] = useCookies(['token']);
-  // const accesstoken = jwtDecode(tokens.data);
+  const accesstoken = jwtDecode(tokens.token);
+  console.log(accesstoken);
+  const nickname = accesstoken.nickname;
 
   // console.log(accesstoken);
   const onLogout = () => {
