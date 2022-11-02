@@ -9,27 +9,16 @@ const Item = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens, removeCookies] = useCookies(['token']);
   const navigate = useNavigate();
-  return (
-    // <ItemList>
-    //   <ItemDiv>
-    //     <div className=" absolute">
-    //       <ItemImg src="https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/porkbelly-fresh-list.png" />
 
-    //       <ItemButton>
-    //         <CartIcon onClick={() => setOpenModal(!openModal)} />
-    //         {openModal && (
-    //           <ItemModal closeModal={() => setOpenModal(!openModal)} />
-    //         )}
-    //       </ItemButton>
-    //     </div>
-    //   </ItemDiv>
-    //   <ItemName>초신선 돼지 삼겹살 구이용</ItemName>
-    //   <ItemInfo>기준가 21,300원/600g</ItemInfo>
-    // </ItemList>
+  const goToDetailHandler = () => {
+    navigate(`/detail/${product?.postId}`);
+  };
+
+  return (
     <ItemList>
       <ItemDiv>
         <div className=" absolute">
-          <ItemImg src={product?.imgUrl} />
+          <ItemImg src={product?.imgUrl} onClick={goToDetailHandler} />
           {tokens.token ? (
             <ItemButton onClick={() => setOpenModal(!openModal)}>
               <CartIcon />
@@ -54,8 +43,10 @@ const Item = ({ product }) => {
           )}
         </div>
       </ItemDiv>
-      <ItemName>{product?.item}</ItemName>
-      <ItemInfo>기준가 {product.cost.toLocaleString()}원/600g</ItemInfo>
+      <ItemName onClick={goToDetailHandler}>{product?.item}</ItemName>
+      <ItemInfo onClick={goToDetailHandler}>
+        기준가 {product.cost?.toLocaleString()}원/600g
+      </ItemInfo>
     </ItemList>
   );
 };

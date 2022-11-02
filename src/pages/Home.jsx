@@ -32,8 +32,7 @@ const Home = () => {
         <BestItemsSection>
           <BestItemsTitle>정육각 베스트 상품</BestItemsTitle>
           <BestItemLists>
-            {/* <Item /> */}
-            {items?.map((item) => (
+            {items?.slice(0, 6).map((item) => (
               <Item key={item.postId} product={item} />
             ))}
           </BestItemLists>
