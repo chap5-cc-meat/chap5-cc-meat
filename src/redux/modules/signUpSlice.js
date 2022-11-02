@@ -61,6 +61,13 @@ const signUpSlice = createSlice({
       ) : (
         <></>
       );
+
+      statusCode === 412 &&
+      errMsg === '비밀번호는 최소 4자리수를 넘겨주세요' ? (
+        alert('비밀번호는 최소 4자리수를 넘겨주세요')
+      ) : (
+        <></>
+      );
     },
   },
 });
