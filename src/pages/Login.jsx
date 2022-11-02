@@ -33,35 +33,10 @@ const Login = () => {
       })
       .catch((error) => {
         // console.log(error.response.data.statusCode);
-        const errMsg = error.response.data.errorMessage;
-        const code = error.response.data.statusCode;
-        // console.log(code);
+        const errMsg = error.response.data.message;
+        const code = error.response.data;
 
-        // const ModalMsg = () => {
-        //   return (
-        //     <div className="hidden w-full h-full flex justify-center items-center box-border absolute z-1000 bg-black/[.6]">
-        //       <div className="w-[500px] h-[240px] flex flex-col items-center bg-white rounded-[3px] shadow-[0px_0px_30px_10px_rgba(0,0,0,0.3)]">
-        //         <div className="relative top-[37px]">
-        //           <h2 className="text-center text-[19px] font-bold">
-        //             정보 입력
-        //           </h2>
-        //           <p className="w-[90%] relative mt-[22px] justify-center leading-[24px] whitespace-pre text-[16px]">
-        //             모든정보를 입력해주세요
-        //           </p>
-        //           <button className="block w-[84px] h-[30px] absolute top-[120px] left-[30%] mt-justify-center items-center mt-[1rem] border border-solid border-gray-300 bg-gray-100 text-[13px] font-[700]">
-        //             확인
-        //           </button>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   );
-        // };
-
-        // code === 404 || errMsg === '가입 정보를 찾을 수 없습니다' ? (
-        //   <ModalMsg />
-        // ) : (
-        //   <></>
-        // );
+        code.ok === 0 ? alert(errMsg) : <></>;
       });
   };
 

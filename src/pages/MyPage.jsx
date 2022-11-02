@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
 import Footer from '../components/Footer';
+import tooltip from '../assets/data_tooltip.svg';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -18,14 +19,14 @@ const MyPage = () => {
   // console.log(accesstoken);
   const onLogout = () => {
     removeCookie('token');
-    navigate('/');
+    window.location.replace(`/`);
   };
   //탭메뉴;
   const [currentTab, setCurrentTab] = useState(0);
   const menuArr = [
     {
       tabT: (
-        <div className="float-left w-[100%] mr-[60px] overflow-hidden leading-[23px] text-[20px] text-[#cbcbcb] font-bold text-center cursor-pointer font-sans">
+        <div className=" float-left w-[100%] mr-[60px] overflow-hidden leading-[23px] text-[20px] text-[#cbcbcb] font-bold text-center cursor-pointer font-sans clicked:border-b-1px border-black">
           주문내역
         </div>
       ),
@@ -36,7 +37,7 @@ const MyPage = () => {
             주문한 내역이 없습니다.
           </p>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/list')}
             className="block w-[260px] h-[70px] mx-[auto] mt-[63px] flex-row justify-center items-center  border-0 bg-black text-white text-[16px] font-bold cursor-pointer  "
           >
             <p className="float-left ml-[28px] block text-white text-[16px] font-bold">
@@ -48,7 +49,7 @@ const MyPage = () => {
               className="relative bottom-[2px] inline-block w-[23px] h-[15px] ml-[60px] italic "
             />
           </button>
-          <div className="w-[100%] h-[1px] bg-black mt-[69px]"></div>
+          <div className="w-[100%] h-[1px] bg-[#e1dedf] mt-[69px]"></div>
         </section>
       ),
     },
@@ -118,7 +119,26 @@ const MyPage = () => {
           개인정보관리
         </div>
       ),
-      content: '개인정보 보호를 위해 한번 더 로그인해주시기 바랍니다.',
+      content: (
+        <section className="w-[980px]">
+          <div className="w-[100%] h-[1px] bg-black mt-[58px]"></div>
+          <div className="mt-[120px] text-[#dbdbdb] text-[38px] text-center">
+            {'준비중입니다. '}
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#e1dedf] mt-[120px]"></div>
+        </section>
+        // <section className="mt-[78px] mb-[166px] ">
+        //* <div>
+        // <div className="relative w-[400px] h-[49px] ml-[478px] ">
+        // <div className="absolute top-[80%] left-[35%] text-white text-[12px]  leading-[38px] outline-0 translate-x-[-50%] translate-y-[-50%]">
+        // 개인정보 보호를 위해 한 번 더 로그인해주시기 바랍니다.
+        //<img src={tooltip} alt="tooltip" />
+        //</div>
+        //<h6>비밀번호 확인</h6>
+        //</div>
+        //</div> */}
+        // </section>
+      ),
     },
   ];
   //탭메뉴 선택시 내용 컨트롤
