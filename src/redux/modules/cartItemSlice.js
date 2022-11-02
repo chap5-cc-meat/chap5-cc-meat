@@ -2,13 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Cookies } from 'react-cookie';
 import { meatApi } from '../../tools/instance';
 import axios from 'axios';
+// import { create } from 'json-server';<=이거 절대 주석풀면x
+//오류 46개 생기는데 잠시 메모해둘 생각인..
 
 //initialState
 const initialState = {
   carts: [],
   isLoading: false,
   isSuccess: false,
-  error: false,
+  error: null,
 };
 
 export const __getItems = createAsyncThunk(
@@ -35,6 +37,15 @@ export const __getItems = createAsyncThunk(
   }
 );
 
+// export const __addBtn = createAsyncThunk(
+//   'addcount/증가',
+//   async (payload, thunkAPI) => {
+//     try {
+//       await axios.get
+//     }
+//   }
+// )
+
 export const __deleteItems = createAsyncThunk(
   'deleteItems/상품을 삭제',
   async (payload, thunkAPI) => {
@@ -51,7 +62,11 @@ export const __deleteItems = createAsyncThunk(
 const cartItemSlice = createSlice({
   name: 'cartItems',
   initialState,
-  reducers: {},
+  reducers: {
+    // addBtn: (state, action) => {
+    //   state.carts
+    // }
+  },
   extraReducers: {
     //getItems
     [__getItems.pending]: (state) => {

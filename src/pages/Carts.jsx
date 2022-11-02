@@ -21,35 +21,45 @@ const Carts = () => {
   console.log(accesstoken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [basket, setBasket] = useState();
   //Btn // getItem
+  // console.log(basket);
+  //count적용할 상품들
+  const data = useSelector((state) => state.cartItems.carts);
+  console.log(data.data);
+  //주문할 상품들
   const getItems = useSelector((state) => state.cartItems.carts);
   console.log(getItems);
 
-  // console.log(cartAmount);
+  const getItem = getItems.data;
+  console.log(getItem);
 
+  // const [, setBasket] = useState();
+  // const [data, setGetItem] = useState(getItems);
+
+  //view
   useEffect(() => {
     dispatch(__getItems());
   }, [dispatch]);
 
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState();
 
   //빼기 버튼
   const minusBtn = () => {
     if (amount < 2) {
       return;
     } else {
-      setAmount(() => amount - 1);
+      setAmount((amount) => amount - 1);
     }
   };
 
   //더하기 버튼
   const plusBtn = () => {
-    setAmount(amount + 1);
+    setAmount((crr) => crr + 1);
+    console.log(amount);
   };
 
   // if (basket !== 0) {
-  console.log(getItems.data.postId);
+  // console.log(...getItems?.data);
   return (
     <>
       <Header />
@@ -71,22 +81,22 @@ const Carts = () => {
             {/* 장바구니 상품정보 getItems 정렬 */}
 
             <ul className="list-none">
-              {getItems.map((items) => {
+              {getItem?.map((items) => {
                 return (
                   <li
-                    key={items.postId}
+                    key={items.cartId}
                     className="relative flex items-center h-[147px] border-b-[1px] border-solid border-[#e1dedf] text-center"
                   >
                     <img
-                      src={porkleg}
+                      src={items.imgUrl}
                       alt="items"
                       className="block w-[109px] h-[109px] ml-[24px] aspect-[auto 109/109]"
                     />
                     <div className="w-[284px] ml-[53px] flex flex-col list-none box-border">
                       <p className="block text-[16px] text-left leading-[24px] cursor-pointer">
-                        초신선 무항생제
+                        {'초신선 무항생제'}
                         <br />
-                        돼지 앞다리 제육용
+                        {'돼지 앞다리 제육용'}
                       </p>
                       <p className="text-left text-[13px] leading-[24px] text-[#9b9b9b]">
                         보통(16mm)
@@ -94,10 +104,10 @@ const Carts = () => {
                     </div>
                     {/* 장바구니 수량 변경 */}
                     <div className="w-[80px] text-[14px] leading-[24px] text-[#9b9b9b] text-center">
-                      600g 기준
+                      {items.option}
                     </div>
                     <div className="w-[118px] h-[38px] border border-[1px] border-[#dcdcdc] text-center">
-                      <ButtonMinus onClick={minusBtn}>
+                      <ButtonMinus onClick={() => minusBtn}>
                         <img
                           src={minus}
                           alt="minus"
@@ -106,8 +116,9 @@ const Carts = () => {
                       </ButtonMinus>
                       <p className="float-left w-[24%] leading-[38px] text-center">
                         {items.amount}
+                        {/* {amount} */}
                       </p>
-                      <ButtonPlus onClick={plusBtn}>
+                      <ButtonPlus onClick={() => plusBtn}>
                         <img
                           src={plus}
                           alt="plus"
@@ -207,7 +218,7 @@ const Carts = () => {
 export default Carts;
 
 //더하기 버튼
-const ButtonPlus = styled.div`
+const ButtonPlus = styled.button`
   float: left;
   width: 44px;
   height: 100%;
