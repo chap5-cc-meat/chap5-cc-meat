@@ -51,15 +51,14 @@ export const __deleteItems = createAsyncThunk(
     try {
       const cookies = new Cookies();
       const token = cookies.get('token');
-      console.log(payload);
 
-      const item = await axios.delete('https://www.iceflower.shop/carts/', {
+      const { item } = await axios.delete('https://www.iceflower.shop/carts/', {
         data: { postId: payload },
         headers: {
           Authorization: `${token}`,
         },
       });
-      return thunkAPI.fulfillWithValue(item);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -100,10 +99,11 @@ const cartItemSlice = createSlice({
     },
     [__deleteItems.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.carts.data = state.carts.data.filter((item) => {
-        console.log(item);
+      const result = state.carts.data.filter((item) => {
         return item.postId !== action.payload;
       });
+      console.log(state.carts.data);
+      state.carts.data = result;
     },
     [__deleteItems.rejected]: (state, action) => {
       state.isLoading = false;
