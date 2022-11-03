@@ -9,17 +9,18 @@ import { useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
 import Footer from '../components/Footer';
 import tooltip from '../assets/data_tooltip.svg';
-
+import { Cookies } from 'react-cookie';
 const MyPage = () => {
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  const tokens = cookies.get('token');
+  const nickname = cookies.get('nickname');
+  console.log(tokens, nickname);
   // 로그아웃;
-  const [tokens, setTokens, removeCookie] = useCookies(['token']);
-  const accesstoken = jwtDecode(tokens.token);
-  console.log(accesstoken);
 
   // console.log(accesstoken);
   const onLogout = () => {
-    removeCookie('token');
+    cookies.remove('token');
     window.location.replace(`/`);
   };
   //탭메뉴;
@@ -128,17 +129,6 @@ const MyPage = () => {
           </div>
           <div className="w-[100%] h-[1px] bg-[#e1dedf] mt-[120px]"></div>
         </section>
-        // <section className="mt-[78px] mb-[166px] ">
-        //* <div>
-        // <div className="relative w-[400px] h-[49px] ml-[478px] ">
-        // <div className="absolute top-[80%] left-[35%] text-white text-[12px]  leading-[38px] outline-0 translate-x-[-50%] translate-y-[-50%]">
-        // 개인정보 보호를 위해 한 번 더 로그인해주시기 바랍니다.
-        //<img src={tooltip} alt="tooltip" />
-        //</div>
-        //<h6>비밀번호 확인</h6>
-        //</div>
-        //</div> */}
-        // </section>
       ),
     },
   ];
@@ -162,7 +152,7 @@ const MyPage = () => {
           />
           <div className="float-left w-[780px] mt-[13px] ml-[42px] flex-row justify-center items-center font-sans">
             <p className="block float-left mt-[8px] text-[24px] font-bold ">
-              Hello, 아무개님
+              Hello, {nickname}님
             </p>
             <button
               onClick={onLogout}

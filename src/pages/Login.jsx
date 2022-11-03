@@ -27,8 +27,9 @@ const Login = () => {
       })
       .then((res) => {
         // console.log(res);
-        // console.log(res.data);
+        //console.log(res.data);
         setTokens('token', res.data.accessToken);
+        setTokens('nickname', res.data.nickname);
         window.location.replace(`/`);
       })
       .catch((error) => {

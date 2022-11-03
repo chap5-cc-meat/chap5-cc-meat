@@ -33,12 +33,14 @@ const CartIem = ({ items }) => {
     dispatch(addItemAmount(items.cost));
   };
 
+  // console.log(items.postId);
   const onDeleteBtn = () => {
-    const delBtn = window.confirm('삭제하시겠어요?');
-    console.log(delBtn);
-    console.log(items.cartId);
     // if (delBtn) {
-    dispatch(__deleteItems(items));
+    // axios.delete('https://www.iceflower.shop/carts/', payload).then((res) => {
+    //   return;
+    // });
+
+    dispatch(__deleteItems(items.postId));
     // } else {
     //   return;
     // }
