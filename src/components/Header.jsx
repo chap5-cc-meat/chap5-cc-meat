@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   const goShoppingHandler = () => {
-    navigate('/list');
+    navigate(`/list?tab=pork`);
   };
 
   return (
