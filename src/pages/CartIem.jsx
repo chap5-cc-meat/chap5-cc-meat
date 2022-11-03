@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const CartIem = ({ items }) => {
   //console.log(items);
-
+  const { postId } = items;
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(items.amount);
 
@@ -37,7 +37,7 @@ const CartIem = ({ items }) => {
     e.preventDefault();
     // console.log(1);
     //window.confirm('삭제하시겠어요?');
-    dispatch(__deleteItems(items.postId));
+    dispatch(__deleteItems(postId));
   };
 
   return (
