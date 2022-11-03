@@ -2,12 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Cookies } from 'react-cookie';
 import { meatApi } from '../../tools/instance';
 import axios from 'axios';
-// import { create } from 'json-server';<=이거 절대 주석풀면x
-//오류 46개 생기는데 잠시 메모해둘 생각인..
 
 //initialState
 const initialState = {
   carts: [],
+  itemAmount: 0,
   isLoading: false,
   isSuccess: false,
   error: null,
@@ -63,9 +62,15 @@ const cartItemSlice = createSlice({
   name: 'cartItems',
   initialState,
   reducers: {
-    // addBtn: (state, action) => {
-    //   state.carts
-    // }
+    addItemAmount: (state, action) => {
+      state.itemAmount = state.itemAmount + action.payload;
+    },
+    MinusItemAmount: (state, action) => {
+      state.itemAmount = state.itemAmount - action.payload;
+    },
+    setItemAmount: (state, action) => {
+      state.itemAmount = action.payload;
+    },
   },
   extraReducers: {
     //getItems
@@ -87,10 +92,10 @@ const cartItemSlice = createSlice({
     },
     [__deleteItems]: (state, action) => {
       state.isLoading = false;
-      console.log(1);
-      state.carts = state.carts.data.filter(
-        (item) => item.cartId !== action.payload
-      );
+      console.log('성공');
+      state.carts.data = state.carts.data.filter((item) => {
+        return item.id !== action.payload;
+      });
     },
     [__deleteItems]: (state, action) => {
       state.isLoading = false;
@@ -99,5 +104,6 @@ const cartItemSlice = createSlice({
   },
 });
 
-export const {} = cartItemSlice.actions;
+export const { addItemAmount, MinusItemAmount, setItemAmount } =
+  cartItemSlice.actions;
 export default cartItemSlice.reducer;
