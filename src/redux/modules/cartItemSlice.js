@@ -27,7 +27,7 @@ export const __getItems = createAsyncThunk(
       const { data } = await axios.get('https://www.iceflower.shop/carts/', {
         headers,
       });
-      console.log(data);
+      console.log(data.data);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -100,7 +100,6 @@ const cartItemSlice = createSlice({
     },
     [__deleteItems.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.carts.data = state.carts.data.filter((item) => {
         console.log(item);
         return item.postId !== action.payload;
