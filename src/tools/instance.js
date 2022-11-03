@@ -16,20 +16,14 @@ const instance = axios.create({
   // baseURL: 'http://localhost:3001',
   baseURL: 'https://www.iceflower.shop/',
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `${token}`,
   },
 });
 
 export const meatApi = {
-  // postSignUps: (payload) => instance.post('/info', payload),
   postSignUps: (payload) => instance.post('/users/signup', payload),
   postLogin: (payload) => instance.post('/users/login', payload),
-  getItems: (payload) => instance.get(`/Carts`),
-  postItems: (payload) => instance.post('/Carts', payload),
-  // postLogin: (payload) => instance.post('/users/login', payload),
-  // mypage: (payload) => instance.get(`/mypages/${id}`),
-  // personal: (payload) => instance.put(`/mypages/${id}/edit`, payload),
-  // itemdelete: (payload) => instance.delete(`/mypages/${id}/:goodsId`),
-  // header: (payload) => instance.get(`/mypages/main/${id}`),
-  // password: (payload) => instance.put(`/login/password`, payload),
+  getItems: (payload) => instance.get('/carts/'),
+
+  deleteItems: (payload) => instance.delete('/carts/'),
 };

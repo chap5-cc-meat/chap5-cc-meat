@@ -1,38 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import porkleg from '../assets/porkleg-clean-list.png';
-import minus from '../assets/data_minus.svg';
-import plus from '../assets/data_plus.svg';
-import itemdel from '../assets/data_itemclose.svg';
 import { meatApi } from '../tools/instance';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { __deleteItems, __getItems } from '../redux/modules/cartItemSlice';
+import { useCookies } from 'react-cookie';
+import jwtDecode from 'jwt-decode';
+import CartIem from './CartIem';
+import { setItemAmount } from '../redux/modules/cartItemSlice';
+
 const Carts = () => {
-  const navigate = useNavigate();
-  const [basket, setBasket] = useState();
-  //Btn
-  const [count, setCount] = useState();
+  const dispatch = useDispatch();
 
-  //빼기 버튼
-  const minusBtn = () => {
-    setCount(count - 1);
-  };
+  //주문할 상품들
+  const getItems = useSelector((state) => state.cartItems.carts);
+  const getItem = getItems.data;
 
-  //더하기 버튼
-  const plusBtn = () => {
-    setCount(count + 1);
-  };
+  //view
+  useEffect(() => {
+    dispatch(__getItems());
+  }, [dispatch]);
 
-  // const meatInfo = meatApi.getItems(payload).then((res) => {
+  const [sum, setSum] = useState(0);
 
-  // }).catch()
+  useEffect(() => {
+    let a = 0;
+    for (let i = 0; i < getItem?.length; i++) {
+      a = a + getItem[i].cost * getItem[i].amount;
+    }
+    dispatch(setItemAmount(a));
+  }, []);
+
+  const cartAmount = useSelector((state) => state.cartItems.itemAmount);
 
   return (
     <>
       <Header />
       <div>
-        <div className="w-[1180px] mx-[auto] mt-[160px] pb-[100px] overflow-hidden">
+        <div className="w-[1180px] mx-[auto] mt-[190px] pb-[100px] overflow-hidden">
           <p className="text-[32px] leading-[26px] text-center">장바구니</p>
           <section className="block float-left w-[860px] mt-[52px] border-t-[1px] border-solid border-black">
             <div className="w-[100%] h-[55px] leading-[55px] border-b-[1px] border-soild border-[#e1dedf]">
@@ -46,61 +53,12 @@ const Carts = () => {
                 {'가격'}
               </div>
             </div>
-            {/* 장바구니 상품정보 */}
+            {/* 장바구니 상품정보 getItems 정렬 */}
+
             <ul className="list-none">
-              <li className="relative flex items-center h-[147px] border-b-[1px] border-solid border-[#e1dedf] text-center">
-                <img
-                  src={porkleg}
-                  alt="items"
-                  className="block w-[109px] h-[109px] ml-[24px] aspect-[auto 109/109]"
-                />
-                <div className="w-[284px] ml-[53px] flex list-none box-border">
-                  <p className="block text-[16px] text-left leading-[24px] cursor-pointer">
-                    {'초신선 무항생제'}
-                    <br />
-                    {'돼지 앞다리 제육용'}
-                  </p>
-                  <p className="ml-[1px] text-[13px] leading-[24px] text-[#9b9b9b]">
-                    보통(16mm)
-                  </p>
-                </div>
-                {/* 장바구니 수량 변경 */}
-                <div className="w-[80px] text-[14px] leading-[24px] text-[#9b9b9b] text-center">
-                  600g 기준
-                </div>
-                <div className="w-[118px] h-[38px] border border-[1px] border-[#dcdcdc] text-center">
-                  <ButtonMinus onClick={minusBtn}>
-                    <img
-                      src={minus}
-                      alt="minus"
-                      className="block w-[12px] h-[12px] ml-[16px] mt-[14px] italic "
-                    />
-                  </ButtonMinus>
-                  <p className="float-left w-[24%] leading-[38px] text-center">
-                    1
-                  </p>
-                  <ButtonPlus onClick={plusBtn}>
-                    <img
-                      src={plus}
-                      alt="plus"
-                      className="block w-[12px] h-[12px] ml-[16px] mt-[14px] italic"
-                    />
-                  </ButtonPlus>
-                </div>
-                <div className="w-[143px] ml-[8px] text-[16px] leading-[24px] text-center outline-0 list-none">
-                  <span className="leading-[24px] text-[16px] text-center outline-0">
-                    12,600원
-                  </span>
-                </div>
-                <button
-                  className="w-[40px] h-[40px] ml-[-1px] text-center border-0 outline-0 font-sans cursor-pointer "
-                  // style={{
-                  //   backgroundImage: "url('../assets/data_itemclose.svg')",
-                  // }}
-                >
-                  <img src={itemdel} alt="itemdel" />
-                </button>
-              </li>
+              {getItem?.map((items) => {
+                return <CartIem items={items} />;
+              })}
             </ul>
           </section>
           <section className="float-left outline-0 w-[280px] mt-[51px] ml-[40px] pb-[30px] border-t-[1px] border-solid border-black bg-[#f8f8f8] font-sans">
@@ -110,7 +68,7 @@ const Carts = () => {
                   총 상품 금액
                 </p>
                 <p className="block float-right text-right text-[15px] leading-[24px] mt-[15px]">
-                  <span>12,600원</span>
+                  <span>{cartAmount.toLocaleString()}원</span>
                 </p>
               </div>
               <div className="border-b-[1px] border-solid border-[#e1dedf] pb-[7px] outline-0 ">
@@ -130,22 +88,22 @@ const Carts = () => {
                     2,500원
                   </span>
                 </section>
-                {/* <section className="mb-[2px] text-[#4a90e2] text-right text-[13px] leading-[24px]">
+                <section className="mb-[2px] text-[#4a90e2] text-right text-[13px] leading-[24px]">
                   <span className="mr-[12.5px] outline-0">첫구매 무료배송</span>
                   <span className="inline-block w-[50px] outline-0 text-[#4a90e2]">
                     -100%
                   </span>
-                </section> */}
+                </section>
               </div>
-              {/* <p className="block outline-0 mt-[6px] mb-[26px] text-center text-[14px] leading-[24px] text-[#4a90e2] ">
+              <p className="block outline-0 mt-[6px] mb-[26px] text-center text-[14px] leading-[24px] text-[#4a90e2] ">
                 첫구매 무료배송 혜택이 적용되었습니다.
-              </p> */}
+              </p>
               <div className="mt-[15px] text-right pb-[9px] outline-0">
                 <p className="block text-[14px] font-bold leading-[24px] ">
                   예상 결제 금액
                 </p>
                 <p className="mt-[2px] text-[24px] font-bold leading-[24px] text-[#d0021b] outline-0 ">
-                  <span>12,600원</span>
+                  <span>{cartAmount.toLocaleString()}원</span>
                 </p>
               </div>
               <button
@@ -168,6 +126,10 @@ const Carts = () => {
       </div>
     </>
   );
+  // } else {
+  //   //빈카트일 때
+  //   <EmptyCarts />;
+  // }
 };
 
 export default Carts;
