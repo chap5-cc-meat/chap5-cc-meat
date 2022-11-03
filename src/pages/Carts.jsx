@@ -1,81 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import porkleg from '../assets/porkleg-clean-list.png';
-import minus from '../assets/data_minus.svg';
-import plus from '../assets/data_plus.svg';
-import itemdel from '../assets/data_itemclose.svg';
 import { meatApi } from '../tools/instance';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import data_goshoping from '../assets/data_goshoping.svg';
-import EmptyCarts from './EmptyCarts';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteItems, __getItems } from '../redux/modules/cartItemSlice';
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
 import CartIem from './CartIem';
+import { setItemAmount } from '../redux/modules/cartItemSlice';
 
 const Carts = () => {
-  const [tokens, setTokens] = useCookies(['token']);
-  const accesstoken = jwtDecode(tokens.token);
-  console.log(accesstoken);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  //Btn // getItem
-  // console.log(basket);
-  //count적용할 상품들
-  const data = useSelector((state) => state.cartItems.carts);
-  // const data2 = ...data
-  // console.log(data.data);
-  // console.log(...data2);
-  // //주문할 상품들
+
+  //주문할 상품들
   const getItems = useSelector((state) => state.cartItems.carts);
-  console.log(getItems);
-
   const getItem = getItems.data;
-  console.log(getItem);
 
-  // const [, setBasket] = useState();
-  // const [Items, setItems] = useState(getItem);
-  // console.log(...Items); //새로고침하면 오류 hi
-  // const cartItems = Items.cartId;
-  // const cartItems = Array.from(Items);
-  // console.log(cartItems);
   //view
   useEffect(() => {
     dispatch(__getItems());
   }, [dispatch]);
 
-  const [amount, setAmount] = useState(1);
+  const [sum, setSum] = useState(0);
 
-  //빼기 버튼
-  const minusBtn = (a) => {
-    if (a < 2) {
-      return;
-    } else {
-      setAmount(a - 1);
+  useEffect(() => {
+    let a = 0;
+    for (let i = 0; i < getItem?.length; i++) {
+      a = a + getItem[i].cost * getItem[i].amount;
     }
-  };
+    dispatch(setItemAmount(a));
+  }, []);
 
-  const [Samount, Ssetamount] = useState([]);
+  const cartAmount = useSelector((state) => state.cartItems.itemAmount);
 
-  console.log(Samount);
-  // const SumCost = getItem?.map((items) => Samount * items.cost);
-  //더하기, 빼기 버튼 컴포넌트 따로
-  // console.log(SumCost);
-  //더하기 버튼
-  const plusBtn = (a) => {
-    setAmount(a + 1);
-    console.log(a);
-  };
-
-  const onDeleteBtn = () => {
-    // dispatch(__deleteItems(cartItems));
-  };
-
-  // if (carts !== 0) {
-  // console.log(...getItems);
   return (
     <>
       <Header />
@@ -98,13 +57,7 @@ const Carts = () => {
 
             <ul className="list-none">
               {getItem?.map((items) => {
-                return (
-                  <CartIem
-                    Samount={Samount}
-                    Ssetamount={Ssetamount}
-                    items={items}
-                  />
-                );
+                return <CartIem items={items} />;
               })}
             </ul>
           </section>
@@ -115,7 +68,7 @@ const Carts = () => {
                   총 상품 금액
                 </p>
                 <p className="block float-right text-right text-[15px] leading-[24px] mt-[15px]">
-                  <span>12,600원</span>
+                  <span>{cartAmount.toLocaleString()}원</span>
                 </p>
               </div>
               <div className="border-b-[1px] border-solid border-[#e1dedf] pb-[7px] outline-0 ">
@@ -150,7 +103,7 @@ const Carts = () => {
                   예상 결제 금액
                 </p>
                 <p className="mt-[2px] text-[24px] font-bold leading-[24px] text-[#d0021b] outline-0 ">
-                  <span>12,600원</span>
+                  <span>{cartAmount.toLocaleString()}원</span>
                 </p>
               </div>
               <button
