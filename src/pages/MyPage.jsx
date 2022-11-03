@@ -17,8 +17,6 @@ const MyPage = () => {
   const nickname = cookies.get('nickname');
   console.log(tokens, nickname);
   // 로그아웃;
-  // const accesstoken = jwtDecode(tokens.token);
-  // console.log(accesstoken);
 
   // console.log(accesstoken);
   const onLogout = () => {
@@ -131,17 +129,6 @@ const MyPage = () => {
           </div>
           <div className="w-[100%] h-[1px] bg-[#e1dedf] mt-[120px]"></div>
         </section>
-        // <section className="mt-[78px] mb-[166px] ">
-        //* <div>
-        // <div className="relative w-[400px] h-[49px] ml-[478px] ">
-        // <div className="absolute top-[80%] left-[35%] text-white text-[12px]  leading-[38px] outline-0 translate-x-[-50%] translate-y-[-50%]">
-        // 개인정보 보호를 위해 한 번 더 로그인해주시기 바랍니다.
-        //<img src={tooltip} alt="tooltip" />
-        //</div>
-        //<h6>비밀번호 확인</h6>
-        //</div>
-        //</div> */}
-        // </section>
       ),
     },
   ];
