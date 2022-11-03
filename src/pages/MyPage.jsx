@@ -9,18 +9,20 @@ import { useNavigate } from 'react-router-dom';
 import data_goshoping from '../assets/data_goshoping.svg';
 import Footer from '../components/Footer';
 import tooltip from '../assets/data_tooltip.svg';
-
+import { Cookies } from 'react-cookie';
 const MyPage = () => {
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  const tokens = cookies.get('token');
+  const nickname = cookies.get('nickname');
+  console.log(tokens, nickname);
   // 로그아웃;
-  const [tokens, setTokens, removeCookie] = useCookies(['token']);
-  const accesstoken = jwtDecode(tokens.token);
-  console.log(accesstoken);
-  const nickname = accesstoken.nickname;
+  // const accesstoken = jwtDecode(tokens.token);
+  // console.log(accesstoken);
 
   // console.log(accesstoken);
   const onLogout = () => {
-    removeCookie('token');
+    cookies.remove('token');
     window.location.replace(`/`);
   };
   //탭메뉴;
@@ -163,7 +165,7 @@ const MyPage = () => {
           />
           <div className="float-left w-[780px] mt-[13px] ml-[42px] flex-row justify-center items-center font-sans">
             <p className="block float-left mt-[8px] text-[24px] font-bold ">
-              Hello, 아무개님
+              Hello, {nickname}님
             </p>
             <button
               onClick={onLogout}
