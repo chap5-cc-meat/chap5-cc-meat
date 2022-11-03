@@ -49,8 +49,10 @@ export const __deleteItems = createAsyncThunk(
   'deleteItems/상품을 삭제',
   async (payload, thunkAPI) => {
     try {
+      console.log(payload);
       //payload = postId 를 받아 상품 삭제
       await meatApi.deleteItems(payload);
+
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -92,7 +94,6 @@ const cartItemSlice = createSlice({
     },
     [__deleteItems]: (state, action) => {
       state.isLoading = false;
-      console.log('성공');
       state.carts.data = state.carts.data.filter((item) => {
         return item.id !== action.payload;
       });

@@ -34,13 +34,15 @@ const CartIem = ({ items }) => {
   };
 
   const onDeleteBtn = () => {
-    // const delBtn = window.confirm('삭제하시겠어요?');
+    const delBtn = window.confirm('삭제하시겠어요?');
+    console.log(delBtn);
+    console.log(items.cartId);
     // if (delBtn) {
-    //   dispatch(__deleteItems(items.cartId));
+    dispatch(__deleteItems(items));
     // } else {
     //   return;
     // }
-    // dispatch(__deleteItems(cartItems));
+    // dispatch(__deleteItems(items.cartId));
   };
 
   return (
@@ -75,7 +77,7 @@ const CartIem = ({ items }) => {
             />
           </ButtonMinus>
           <p className="float-left w-[24%] leading-[38px] text-center">
-            {amount}
+            {items.amount}
             {/* {amount} */}
           </p>
           <ButtonPlus onClick={plusBtn}>

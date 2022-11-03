@@ -16,7 +16,6 @@ const MyPage = () => {
   const [tokens, setTokens, removeCookie] = useCookies(['token']);
   const accesstoken = jwtDecode(tokens.token);
   console.log(accesstoken);
-  const nickname = accesstoken.nickname;
 
   // console.log(accesstoken);
   const onLogout = () => {

@@ -15,15 +15,15 @@ const Carts = () => {
   const dispatch = useDispatch();
 
   //주문할 상품들
+  const cartAmount = useSelector((state) => state.cartItems.itemAmount);
   const getItems = useSelector((state) => state.cartItems.carts);
   const getItem = getItems.data;
+  console.log(getItem);
 
   //view
   useEffect(() => {
     dispatch(__getItems());
   }, [dispatch]);
-
-  const [sum, setSum] = useState(0);
 
   useEffect(() => {
     let a = 0;
@@ -32,8 +32,6 @@ const Carts = () => {
     }
     dispatch(setItemAmount(a));
   }, []);
-
-  const cartAmount = useSelector((state) => state.cartItems.itemAmount);
 
   return (
     <>
