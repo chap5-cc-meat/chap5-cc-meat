@@ -27,7 +27,7 @@ export const __getItems = createAsyncThunk(
       const { data } = await axios.get('https://www.iceflower.shop/carts/', {
         headers,
       });
-      console.log(data);
+      console.log(data.data);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -49,11 +49,17 @@ export const __deleteItems = createAsyncThunk(
   'deleteItems/상품을 삭제',
   async (payload, thunkAPI) => {
     try {
+      const cookies = new Cookies();
+      const token = cookies.get('token');
       console.log(payload);
-      //payload = postId 를 받아 상품 삭제
-      await axios.delete('https://www.iceflower.shop/carts/', payload);
 
-      return thunkAPI.fulfillWithValue(payload);
+      const item = await axios.delete('https://www.iceflower.shop/carts/', {
+        data: { postId: payload },
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      return thunkAPI.fulfillWithValue(item);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -94,8 +100,8 @@ const cartItemSlice = createSlice({
     },
     [__deleteItems.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(state);
       state.carts.data = state.carts.data.filter((item) => {
+        console.log(item);
         return item.postId !== action.payload;
       });
     },

@@ -12,7 +12,7 @@ import {
 import axios from 'axios';
 
 const CartIem = ({ items }) => {
-  console.log(items);
+  //console.log(items);
 
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(items.amount);
@@ -33,18 +33,11 @@ const CartIem = ({ items }) => {
     dispatch(addItemAmount(items.cost));
   };
 
-  // console.log(items.postId);
-  const onDeleteBtn = () => {
-    // if (delBtn) {
-    // axios.delete('https://www.iceflower.shop/carts/', payload).then((res) => {
-    //   return;
-    // });
-
+  const delBtnHandler = (e) => {
+    e.preventDefault();
+    // console.log(1);
+    //window.confirm('삭제하시겠어요?');
     dispatch(__deleteItems(items.postId));
-    // } else {
-    //   return;
-    // }
-    // dispatch(__deleteItems(items.cartId));
   };
 
   return (
@@ -79,8 +72,7 @@ const CartIem = ({ items }) => {
             />
           </ButtonMinus>
           <p className="float-left w-[24%] leading-[38px] text-center">
-            {items.amount}
-            {/* {amount} */}
+            {amount}
           </p>
           <ButtonPlus onClick={plusBtn}>
             <img
@@ -96,8 +88,8 @@ const CartIem = ({ items }) => {
           </span>
         </div>
         <button
+          onClick={delBtnHandler}
           className="w-[40px] h-[40px] ml-[-1px] text-center border-0 outline-0 font-sans cursor-pointer "
-          onClick={onDeleteBtn}
         >
           <img src={itemdel} alt="itemdel" />
         </button>
