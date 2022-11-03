@@ -4,10 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { __PostCart } from '../redux/modules/ItemSlice';
 import { addItemCount } from '../redux/modules/ItemSlice';
+import { Cookies } from 'react-cookie';
 
 const DetailContents = () => {
   const [count, setCount] = useState(1);
   const item = useSelector((state) => state.detailSlice.item.data);
+  const cookies = new Cookies();
+  const token = cookies.get('token');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,15 +24,25 @@ const DetailContents = () => {
   };
 
   const buyNowHandler = () => {
-    dispatch(__PostCart({ amount: count, postId: item.postId }));
-    dispatch(addItemCount(count));
-    navigate('/Carts');
+    if (token) {
+      dispatch(__PostCart({ amount: count, postId: item.postId }));
+      dispatch(addItemCount(count));
+      navigate('/Carts');
+    } else {
+      alert('로그인이 필요합니다');
+      return;
+    }
   };
 
   const addCartHandler = () => {
-    dispatch(__PostCart({ amount: count, postId: item.postId }));
-    dispatch(addItemCount(count));
-    alert('장바구니에 추가하였습니다 ');
+    if (token) {
+      dispatch(__PostCart({ amount: count, postId: item.postId }));
+      dispatch(addItemCount(count));
+      alert('장바구니에 추가하였습니다 ');
+    } else {
+      alert('로그인이 필요합니다');
+      return;
+    }
   };
 
   return (
