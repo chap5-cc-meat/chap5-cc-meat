@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 // },
 
 const token = document.cookie.replace('token=', '');
+console.log(token);
 // const accesstoken = token && jwt_decode(token);
 // const id = accesstoken.userId;
 
